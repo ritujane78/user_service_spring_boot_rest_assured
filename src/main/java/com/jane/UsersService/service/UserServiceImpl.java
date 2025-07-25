@@ -1,9 +1,9 @@
-package com.appsdeveloperblog.UsersService.service;
+package com.jane.UsersService.service;
 
-import com.appsdeveloperblog.UsersService.exceptions.UserServiceException;
-import com.appsdeveloperblog.UsersService.io.UserEntity;
-import com.appsdeveloperblog.UsersService.io.UsersRepository;
-import com.appsdeveloperblog.UsersService.ui.model.User;
+import com.jane.UsersService.exceptions.UserServiceException;
+import com.jane.UsersService.io.UserEntity;
+import com.jane.UsersService.io.UsersRepository;
+import com.jane.UsersService.ui.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

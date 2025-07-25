@@ -1,13 +1,13 @@
-package com.appsdeveloperblog.UsersService.ui;
+package com.jane.UsersService.ui;
 
-import com.appsdeveloperblog.UsersService.service.UserService;
+import com.jane.UsersService.service.UserService;
 
-import com.appsdeveloperblog.UsersService.ui.model.ErrorResponse;
-import com.appsdeveloperblog.UsersService.ui.model.User;
-import com.appsdeveloperblog.UsersService.ui.model.UserRest;
+import com.jane.UsersService.ui.model.ErrorResponse;
+import com.jane.UsersService.ui.model.User;
+import com.jane.UsersService.ui.model.UserRest;
 import jakarta.validation.Valid;
 
-import com.appsdeveloperblog.UsersService.exceptions.UserServiceException;
+import com.jane.UsersService.exceptions.UserServiceException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

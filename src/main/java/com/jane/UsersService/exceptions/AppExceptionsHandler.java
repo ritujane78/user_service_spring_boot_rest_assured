@@ -1,6 +1,6 @@
-package com.appsdeveloperblog.UsersService.exceptions;
+package com.jane.UsersService.exceptions;
 
-import com.appsdeveloperblog.UsersService.ui.model.ErrorResponse;
+import com.jane.UsersService.ui.model.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

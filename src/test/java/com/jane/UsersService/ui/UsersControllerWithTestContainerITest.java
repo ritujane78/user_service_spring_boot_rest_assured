@@ -1,9 +1,8 @@
-package com.appsdeveloperblog.UsersService.ui;
+package com.jane.UsersService.ui;
 
-import com.appsdeveloperblog.UsersService.ui.model.User;
-import com.appsdeveloperblog.UsersService.ui.model.UserRest;
+import com.jane.UsersService.ui.model.User;
+import com.jane.UsersService.ui.model.UserRest;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import org.junit.jupiter.api.*;
@@ -15,10 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.shaded.com.google.common.net.MediaType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;

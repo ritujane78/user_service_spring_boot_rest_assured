@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.exceptions;
+package com.jane.UsersService.exceptions;
 
 public class UserServiceException extends RuntimeException{
     public UserServiceException(String message) {

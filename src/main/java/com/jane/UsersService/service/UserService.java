@@ -1,6 +1,6 @@
-package com.appsdeveloperblog.UsersService.service;
+package com.jane.UsersService.service;
 
-import com.appsdeveloperblog.UsersService.ui.model.User;
+import com.jane.UsersService.ui.model.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.io;
+package com.jane.UsersService.io;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

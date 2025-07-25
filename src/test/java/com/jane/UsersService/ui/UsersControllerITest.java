@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.ui;
+package com.jane.UsersService.ui;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;

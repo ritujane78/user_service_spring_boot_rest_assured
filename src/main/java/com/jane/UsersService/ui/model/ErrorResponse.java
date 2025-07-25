@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.ui.model;
+package com.jane.UsersService.ui.model;
 
 public class ErrorResponse {
     private String errorMessage;

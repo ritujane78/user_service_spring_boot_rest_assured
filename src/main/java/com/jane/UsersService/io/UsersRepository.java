@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.io;
+package com.jane.UsersService.io;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

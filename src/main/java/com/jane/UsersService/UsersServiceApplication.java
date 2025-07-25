@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService;
+package com.jane.UsersService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

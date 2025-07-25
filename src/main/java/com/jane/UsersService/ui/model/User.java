@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.ui.model;
+package com.jane.UsersService.ui.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

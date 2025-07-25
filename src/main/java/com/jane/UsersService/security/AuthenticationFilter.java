@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.UsersService.security;
+package com.jane.UsersService.security;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -16,8 +16,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.appsdeveloperblog.UsersService.service.UserService;
-import com.appsdeveloperblog.UsersService.ui.model.LoginRequest;
+import com.jane.UsersService.service.UserService;
+import com.jane.UsersService.ui.model.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
