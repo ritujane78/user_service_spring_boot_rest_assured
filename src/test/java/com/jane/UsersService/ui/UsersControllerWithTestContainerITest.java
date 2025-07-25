@@ -5,6 +5,7 @@ import com.jane.UsersService.ui.model.UserRest;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -54,33 +55,32 @@ public class UsersControllerWithTestContainerITest {
                 new Header("Accept", "application/json")
         );
         User newUser = new User("Ritu", "Bafna","abc@test.com", "12345678");
-//        or
-//        Map<String,String> newUser = new HashMap<>();
-//        newUser.put("firstName","Ritu");
-//        ... and so on
 
 
 
 //        Act
-        UserRest createdUser = given()
+        Response response = given()
                 .headers(headers)
-//                or
-//                .header("Content-Type", "application/json")
-//                .header("Accept", "application/json")
-//                or
-//                .contentType(ContentType.JSON)
-//                .accept(ContentType.JSON)
-
                 .body(newUser)
         .when().post("/users")
         .then()
                 .extract()
-                .as(UserRest.class);
+                .response();
 //        Assert
-        assertEquals(newUser.getFirstName(), createdUser.getFirstName(),"Created first name doesn't match the returned one");
-        assertEquals(newUser.getLastName(), createdUser.getLastName(), " Created last name doesn't match the returned one");
-        assertEquals(newUser.getEmail(), createdUser.getEmail(), " Created email doesn't match the returned one");
-        assertNotNull(createdUser.getId());
+//        UserRest createdUser = response.as(UserRest.class);
+//        assertEquals(201, response.statusCode());
+//        assertEquals(newUser.getFirstName(), createdUser.getFirstName(),"Created first name doesn't match the returned one");
+//        assertEquals(newUser.getLastName(), createdUser.getLastName(), " Created last name doesn't match the returned one");
+//        assertEquals(newUser.getEmail(), createdUser.getEmail(), " Created email doesn't match the returned one");
+//        assertNotNull(createdUser.getId());
+
+//        or
+
+        assertEquals(201, response.statusCode());
+        assertEquals(newUser.getFirstName(), response.jsonPath().getString("firstName"),"Created first name doesn't match the returned one");
+        assertEquals(newUser.getLastName(), response.jsonPath().getString("lastName"), " Created last name doesn't match the returned one");
+        assertEquals(newUser.getEmail(), response.jsonPath().getString("email"), " Created email doesn't match the returned one");
+        assertNotNull(response.jsonPath().getString("id"));
     }
 
 
