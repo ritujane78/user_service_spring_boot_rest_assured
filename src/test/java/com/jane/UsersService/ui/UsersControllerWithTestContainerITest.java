@@ -17,6 +17,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,28 +61,20 @@ public class UsersControllerWithTestContainerITest {
 
 
 //        Act
-        Response response = given()
+        given()
                 .headers(headers)
                 .body(newUser)
         .when().post("/users")
         .then()
-                .extract()
-                .response();
+                .statusCode(201)
+                .body("id", notNullValue())
+                .body("firstName", equalTo(newUser.getFirstName()))
+                .body("lastName", equalTo(newUser.getLastName()))
+                .body("email",equalTo(newUser.getEmail()));
+
 //        Assert
-//        UserRest createdUser = response.as(UserRest.class);
-//        assertEquals(201, response.statusCode());
-//        assertEquals(newUser.getFirstName(), createdUser.getFirstName(),"Created first name doesn't match the returned one");
-//        assertEquals(newUser.getLastName(), createdUser.getLastName(), " Created last name doesn't match the returned one");
-//        assertEquals(newUser.getEmail(), createdUser.getEmail(), " Created email doesn't match the returned one");
-//        assertNotNull(createdUser.getId());
 
-//        or
 
-        assertEquals(201, response.statusCode());
-        assertEquals(newUser.getFirstName(), response.jsonPath().getString("firstName"),"Created first name doesn't match the returned one");
-        assertEquals(newUser.getLastName(), response.jsonPath().getString("lastName"), " Created last name doesn't match the returned one");
-        assertEquals(newUser.getEmail(), response.jsonPath().getString("email"), " Created email doesn't match the returned one");
-        assertNotNull(response.jsonPath().getString("id"));
     }
 
 
