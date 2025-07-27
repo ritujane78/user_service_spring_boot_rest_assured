@@ -3,12 +3,16 @@ package com.jane.UsersService.ui;
 import com.jane.UsersService.ui.model.User;
 import com.jane.UsersService.ui.model.UserRest;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -20,8 +24,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,6 +53,19 @@ public class UsersControllerWithTestContainerITest {
         RestAssured.baseURI="http://localhost";
         RestAssured.port = port;
         RestAssured.filters(requestLoggingFilter,responseLoggingFilter);
+
+        RestAssured.requestSpecification = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setAccept(ContentType.JSON)
+//                .addFilter(new RequestLoggingFilter())
+//                .addFilter(new RequestLoggingFilter())
+                .build();
+
+        RestAssured.responseSpecification = new ResponseSpecBuilder()
+//                .expectStatusCode(anyOf(is(200), is(201), is(204)))
+                .expectResponseTime(lessThan(2000L))
+//                .expectBody("id",notNullValue())
+                .build();
     }
     @Order(1)
     @Test
@@ -61,10 +77,11 @@ public class UsersControllerWithTestContainerITest {
     @Test
     void testCreateMethod_whenValidDetailsProvided_returnsCreatedUser(){
 //        Arrange
-        Headers headers = new Headers(
-                new Header("Content-Type", "application/json"),
-                new Header("Accept", "application/json")
-        );
+//        We do not have to define headers indiduvally. It is done universally in @BeforeAll lifecycle
+//        Headers headers = new Headers(
+//                new Header("Content-Type", "application/json"),
+//                new Header("Accept", "application/json")
+//        );
         User newUser = new User("Ritu", "Bafna","abc@test.com", "12345678");
 
 
@@ -72,7 +89,7 @@ public class UsersControllerWithTestContainerITest {
 //        Act
         given()
 //                .log().all() //individual methods
-                .headers(headers)
+//                .headers(headers)
                 .body(newUser)
         .when().post("/users")
         .then()
@@ -87,6 +104,4 @@ public class UsersControllerWithTestContainerITest {
 
 
     }
-
-
 }

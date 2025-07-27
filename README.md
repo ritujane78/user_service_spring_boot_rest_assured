@@ -3,7 +3,7 @@
 Fluent API with BDD syntax
 
 
-REST Assured test methods are run with databse created in a Docker container.
+REST Assured test methods are run with database created in a Docker container.
 
 
 Test Methods in UsersControllerWithTestContainerITest.java:
