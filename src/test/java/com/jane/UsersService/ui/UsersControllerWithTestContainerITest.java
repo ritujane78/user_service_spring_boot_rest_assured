@@ -85,7 +85,7 @@ public class UsersControllerWithTestContainerITest {
 
     @Order(2)
     @Test
-    void testCreateMethod_whenValidDetailsProvided_returnsCreatedUser(){
+    void testCreateUser_whenValidDetailsProvided_returnsCreatedUser(){
 //        Arrange
 //        We do not have to define headers indiduvally. It is done universally in @BeforeAll lifecycle
 //        Headers headers = new Headers(
@@ -155,5 +155,20 @@ public class UsersControllerWithTestContainerITest {
                 .body("email", equalTo(TEST_EMAIL))
                 .body("firstName", notNullValue())
                 .body("lastName", notNullValue());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("pagination with limits work")
+    void testGetUsers_whenValidTokenAndQueryParamsProvided_returnsPaginatedUsersList(){
+        given()
+                .header("Authorization", "Bearer " + this.token)
+                .queryParam("page", 1)
+                .queryParam("limit", 10)
+        .when()
+                .get("/users")
+        .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("size()", equalTo(1));
     }
 }
