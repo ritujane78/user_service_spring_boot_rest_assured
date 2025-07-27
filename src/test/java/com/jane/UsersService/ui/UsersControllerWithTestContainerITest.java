@@ -18,10 +18,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -42,6 +46,12 @@ public class UsersControllerWithTestContainerITest {
 
     @LocalServerPort
     private int port;
+
+    public final String TEST_EMAIL = "abc@test.com";
+    public final String TEST_PASSWORD = "12345678";
+
+    public String userId;
+    public String token;
     private final RequestLoggingFilter requestLoggingFilter = new RequestLoggingFilter();
     private final ResponseLoggingFilter responseLoggingFilter = new ResponseLoggingFilter();
 
@@ -82,7 +92,7 @@ public class UsersControllerWithTestContainerITest {
 //                new Header("Content-Type", "application/json"),
 //                new Header("Accept", "application/json")
 //        );
-        User newUser = new User("Ritu", "Bafna","abc@test.com", "12345678");
+        User newUser = new User("Ritu", "Bafna",TEST_EMAIL,TEST_PASSWORD);
 
 
 
@@ -103,5 +113,29 @@ public class UsersControllerWithTestContainerITest {
 //        Assert
 
 
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("user credentials are authenticated")
+    void testLogin_whenValidCredentialsProvided_returnsTokenAndValidUserIdHeaders(){
+//        Arrange
+        Map<String, String> credentials = new HashMap<>();
+        credentials.put("email", TEST_EMAIL);
+        credentials.put("password", TEST_PASSWORD);
+
+//        Act
+        Response response = given()
+                .body(credentials)
+        .when()
+                .post("/login");
+        this.userId = response.header("userId");
+        this.token = response.header("token");
+
+//        Assert
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        assertNotNull(userId);
+        assertNotNull(token);
     }
 }
