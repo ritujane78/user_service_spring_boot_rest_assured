@@ -3,6 +3,9 @@ package com.jane.UsersService.ui;
 import com.jane.UsersService.ui.model.User;
 import com.jane.UsersService.ui.model.UserRest;
 import io.restassured.RestAssured;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -36,11 +39,17 @@ public class UsersControllerWithTestContainerITest {
 
     @LocalServerPort
     private int port;
+    private final RequestLoggingFilter requestLoggingFilter = new RequestLoggingFilter();
+    private final ResponseLoggingFilter responseLoggingFilter = new ResponseLoggingFilter();
+
+//    Don't log evrything in the request but a few
+//    private final RequestLoggingFilter requestLoggingFilter = RequestLoggingFilter.with(LogDetail.BODY,LogDetail.HEADERS);
 
     @BeforeAll
     void setup(){
         RestAssured.baseURI="http://localhost";
         RestAssured.port = port;
+        RestAssured.filters(requestLoggingFilter,responseLoggingFilter);
     }
     @Order(1)
     @Test
@@ -62,10 +71,12 @@ public class UsersControllerWithTestContainerITest {
 
 //        Act
         given()
+//                .log().all() //individual methods
                 .headers(headers)
                 .body(newUser)
         .when().post("/users")
         .then()
+//                .log().all() //individual methods
                 .statusCode(201)
                 .body("id", notNullValue())
                 .body("firstName", equalTo(newUser.getFirstName()))
